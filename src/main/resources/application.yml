@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  cache:
+    caffeine:
+      spec: expireAfterWrite=10s
+
+  datasource:
+    url: jdbc:mysql://${DATABASE_URL:localhost}:${DATABASE_PORT:3306}/communitymanagement?createDatabaseIfNotExist=true
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:secret}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  sql:
+    init:
+      mode: ${DATABASE_INIT:always}
+      schema-locations: "classpath:database-init.sql"
+
+
+
+logging:
+  level:
+    org.apache.coyote.http11.Http11InputBuffer: TRACE
+    com.laioffer.twitch.external.TwitchApiClient: DEBUG
+    org.springframework.jdbc.core: DEBUG
+    org.springframework.jdbc.datasource.init: DEBUG
+
+
+
+
