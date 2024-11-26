@@ -13,6 +13,13 @@ CREATE TABLE users
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO users (username, password, role) VALUES
+                                                 ('admin_user', 'password123', 'ADMIN'),
+                                                 ('john_doe', 'securepass456', 'RESIDENT'),
+                                                 ('jane_doe', 'mypassword789', 'RESIDENT'),
+                                                 ('super_admin', 'adminpass', 'ADMIN');
+
+
 -- Create Announcements Table
 CREATE TABLE announcements
 (
