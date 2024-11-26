@@ -1,17 +1,20 @@
 package com.laioffer.communitymanagement.db.entity;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 
 @Table("announcements")
 public record AnnouncementEntity(
-        @Id Long id,
+        @Id Integer id,
         String title,
         String content,
-        Long postedBy, // References UserEntity.id
-        Instant createdAt
+        @Column("posted_by") Integer postedBy,
+        @Column("created_at") LocalDateTime createdAt
 ) {
+
 }

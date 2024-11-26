@@ -22,23 +22,11 @@ public class AppConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                .authorizeHttpRequests(auth ->
-                        auth
-                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                .requestMatchers(HttpMethod.GET, "/", "/index.html", "/*.json", "/*.png", "/static/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/login", "/register", "/logout").permitAll()
-                                .anyRequest().authenticated()
-                )
-                .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-                .and()
-                .formLogin()
-                .successHandler((req, res, auth) -> res.setStatus(HttpStatus.NO_CONTENT.value()))
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                .and()
-                .logout()
-                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.NO_CONTENT));
+                .csrf().disable() // 禁用 CSRF 保护
+                .authorizeHttpRequests(auth -> auth
+                        .anyRequest().permitAll() // 允许所有请求
+
+                );
         return http.build();
     }
 

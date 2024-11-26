@@ -20,8 +20,7 @@ CREATE TABLE announcements
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     posted_by INT NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (posted_by) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create Discussions Table
