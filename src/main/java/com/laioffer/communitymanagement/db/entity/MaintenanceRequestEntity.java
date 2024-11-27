@@ -4,13 +4,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
-@Table("users")
-public record UserEntity(
+@Table("MaintenanceRequest")
+public record MaintenanceRequestEntity(
         @Id Long id,
-        String username,
-        String password,
-        String role, // ENUM('RESIDENT', 'ADMIN')
+        Long userId, // References UserEntity.id
+        String description,
+        LocalDate requestDate,
         Instant createdAt
 ) {
 }
