@@ -57,6 +57,43 @@ INSERT INTO discussions (content, announcement_id, posted_by) VALUES
                                                                   ('Thanks for the notice.', 2, 3),
                                                                   ('The new equipment is great!', 3, 4);
 
+
+-- type：帖子的类型，可以是 'post' 或 'discussion'。
+-- author：发帖人的用户名或者用户ID。
+-- content：帖子的正文内容。
+-- post_date：帖子发布的日期。
+CREATE TABLE posts (
+                       id INT AUTO_INCREMENT PRIMARY KEY,
+                       type ENUM('post', 'discussion') NOT NULL,
+                       author_id INT NOT NULL,
+                       content TEXT NOT NULL,
+                       post_date DATE NOT NULL,
+                       FOREIGN KEY (author_id) REFERENCES users(id)
+);
+
+INSERT INTO posts (type,author_id,content,post_date) VALUES
+                                                            ('post', 2, 'Looking forward to the event!', CURDATE()),
+                                                            ('post', 3, 'Thanks for the notice.', CURDATE()),
+                                                            ('post', 4, 'The new equipment is great!', CURDATE());
+
+
+-- post_id：该回复所属的帖子ID，与帖子表的ID相关联。
+-- parent_comment_id：如果这是对另一条回复的回复，这里将存储那条回复的ID。如果直接回复帖子，此字段可以是 NULL。
+-- author：发回复的用户。
+-- content：回复的内容。
+-- comment_date：发表回复的日期。
+CREATE TABLE comments (
+                          id INT AUTO_INCREMENT PRIMARY KEY,
+                          post_id INT NOT NULL,
+                          parent_comment_id INT,
+                          author_id INT NOT NULL,
+                          content TEXT NOT NULL,
+                          comment_date DATE NOT NULL,
+                          FOREIGN KEY (post_id) REFERENCES posts(id),
+                          FOREIGN KEY (parent_comment_id) REFERENCES comments(id),
+                          FOREIGN KEY (author_id) REFERENCES users(id)
+);
+
 -- Create Conversations Table
 CREATE TABLE Conversations
 (
@@ -138,4 +175,14 @@ CREATE TABLE AmenityReservations
 INSERT INTO AmenityReservations (user_id, amenity_id, reservation_date, reservation_time) VALUES
                                                                                               (2, 1, '2024-12-01', '14:00:00'),
                                                                                               (3, 2, '2024-12-02', '10:00:00'),
+                                                                                            (3, 2, '2024-12-02', '10:00:00'),
                                                                                               (4, 3, '2024-12-03', '16:00:00');
+
+
+CREATE TABLE Packages (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          code VARCHAR(50) NOT NULL,         -- Unique pickup code
+                          location VARCHAR(100) NOT NULL,    -- Package location
+                          picked_up BOOLEAN DEFAULT FALSE,   -- Whether the package has been picked up
+                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
