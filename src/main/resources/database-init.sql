@@ -138,4 +138,14 @@ CREATE TABLE AmenityReservations
 INSERT INTO AmenityReservations (user_id, amenity_id, reservation_date, reservation_time) VALUES
                                                                                               (2, 1, '2024-12-01', '14:00:00'),
                                                                                               (3, 2, '2024-12-02', '10:00:00'),
+                                                                                            (3, 2, '2024-12-02', '10:00:00'),
                                                                                               (4, 3, '2024-12-03', '16:00:00');
+
+
+CREATE TABLE Packages (
+                          id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                          code VARCHAR(50) NOT NULL,         -- Unique pickup code
+                          location VARCHAR(100) NOT NULL,    -- Package location
+                          picked_up BOOLEAN DEFAULT FALSE,   -- Whether the package has been picked up
+                          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
